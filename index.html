@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>SoftClimate AI</title>
+<title>SoftClimate AI Assistant</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -21,14 +21,14 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:40px;
+  padding:20px;
   color:#3a235c;
 }
 
 /* ===== CONTAINER ===== */
 .wrapper{
   width:100%;
-  max-width:850px;
+  max-width:900px;
   background:#ffffffcc;
   backdrop-filter:blur(14px);
   border-radius:30px;
@@ -108,6 +108,19 @@ body{
   cursor:pointer;
 }
 
+/* ===== NEW CHAT ===== */
+.new-chat-btn{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:20px;
+  background:#b76be4;
+  color:#fff;
+  font-weight:600;
+  cursor:pointer;
+  margin-top:12px;
+}
+
 /* ===== HISTORY ===== */
 .history{
   margin-top:20px;
@@ -126,12 +139,44 @@ body{
   font-size:13px;
 }
 
-/* ===== FOOTER ===== */
-.footer{
-  text-align:center;
-  margin-top:18px;
-  font-size:13px;
-  opacity:0.75;
+/* ===== IMPACT ===== */
+.impact-container{
+  margin-top:25px;
+  background:#fff;
+  padding:20px;
+  border-radius:22px;
+  box-shadow:0 10px 25px rgba(180,120,220,0.15);
+}
+
+.impact-container h3{
+  margin-bottom:15px;
+}
+
+.impact-container input{
+  width:100%;
+  padding:12px;
+  margin-bottom:10px;
+  border-radius:12px;
+  border:1px solid #e0c9f2;
+}
+
+.impact-container button{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:14px;
+  background:#d16ba5;
+  color:#fff;
+  font-weight:600;
+  cursor:pointer;
+}
+
+.result{
+  margin-top:12px;
+  padding:12px;
+  border-radius:12px;
+  background:#ffe4f3;
+  font-weight:600;
 }
 </style>
 </head>
@@ -142,13 +187,12 @@ body{
 
   <div class="title">
     <h1>SoftClimate AI</h1>
-    <p>An AI-Powered Climate Action Assistant for Carbon Awareness & Sustainability</p>
+    <p>AI Assistant for Climate, Carbon Awareness & Sustainability</p>
   </div>
 
+  <!-- CHAT AREA -->
   <div class="chat-area" id="chatBox">
-    <div class="msg bot">
-      Hello 🌍 I’m SoftClimate AI. Ask me anything about climate change, carbon, sustainability, or SDG 13.
-    </div>
+    <div class="msg bot">Hello 🌱 I’m SoftClimate AI. Ask me anything about climate or sustainability!</div>
   </div>
 
   <div class="input-area">
@@ -156,14 +200,22 @@ body{
     <button onclick="sendMessage()">➤</button>
   </div>
 
+  <button class="new-chat-btn" onclick="newChat()">🆕 New Chat</button>
+
+  <!-- IMPACT CALCULATOR -->
+  <div class="impact-container">
+    <h3>🌱 Carbon Footprint Calculator</h3>
+    <input id="transport" type="number" placeholder="Transport km/day">
+    <input id="electricity" type="number" placeholder="Electricity units/month">
+    <input id="meat" type="number" placeholder="Meat meals/week">
+    <button onclick="calculateImpact()">Check Impact</button>
+    <div class="result" id="impactResult"></div>
+  </div>
+
   <!-- CHAT HISTORY -->
   <div class="history">
     <h3>📜 Chat History</h3>
     <div id="historyList"></div>
-  </div>
-
-  <div class="footer">
-    AICTE Internship · CSRBOX Capstone · Powered by Gemini API
   </div>
 
 </div>
@@ -173,56 +225,51 @@ const chatBox = document.getElementById("chatBox");
 const historyList = document.getElementById("historyList");
 let history = [];
 
-/* ADD MESSAGE */
-function addMessage(text,type){
-  const div=document.createElement("div");
-  div.className="msg "+type;
-  div.textContent=text;
-  chatBox.appendChild(div);
-  chatBox.scrollTop=chatBox.scrollHeight;
-}
-
-/* UPDATE HISTORY */
-function updateHistory(){
-  historyList.innerHTML="";
-  history.slice(-6).forEach(h=>{
-    const div=document.createElement("div");
-    div.className="history-item";
-    div.textContent=h;
-    historyList.appendChild(div);
-  });
-}
-
-/* SMART CLIMATE AI */
-function smartReply(msg){
+// ===== LOCAL CLIMATE AI =====
+function localClimateReply(msg){
   msg = msg.toLowerCase();
 
   if(["hi","hii","hello","hey"].includes(msg))
     return "Hello 🌱 I’m SoftClimate AI. How can I help you with climate awareness today?";
 
-  if(msg.includes("what is carbon"))
-    return "Carbon is a natural element found in all living things. In climate science, it usually refers to carbon dioxide (CO₂), a greenhouse gas released from vehicles, industries, and electricity generation.";
+  if(msg.includes("carbon"))
+    return "Carbon is a natural element. CO₂ is a greenhouse gas that traps heat in the atmosphere.";
 
-  if(msg.includes("carbon footprint"))
-    return "A carbon footprint is the total greenhouse gas emissions caused by human activities like travel, electricity usage, and food consumption.";
+  if(msg.includes("co2"))
+    return "CO₂ (carbon dioxide) is released by vehicles, factories, electricity generation, and deforestation.";
 
   if(msg.includes("climate change"))
-    return "Climate change refers to long-term changes in Earth’s temperature and weather patterns caused mainly by human activities.";
+    return "Climate change refers to long-term changes in Earth’s climate, mainly caused by human activities.";
 
   if(msg.includes("global warming"))
-    return "Global warming is the gradual increase in Earth’s average temperature due to excess greenhouse gases trapping heat.";
+    return "Global warming is the rise in Earth’s temperature due to excess greenhouse gases.";
 
   if(msg.includes("sustainability"))
-    return "Sustainability means meeting today’s needs without harming future generations by protecting the environment and using resources wisely.";
+    return "Sustainability means using resources responsibly so future generations can thrive.";
 
   if(msg.includes("sdg"))
-    return "SDG 13 focuses on urgent action to combat climate change and its impacts through awareness, innovation, and sustainable practices.";
+    return "SDG 13 focuses on urgent action to combat climate change and its impacts.";
 
-  return "That’s an important climate question 🌍. Climate action helps reduce environmental risks and build a sustainable future.";
+  if(msg.includes("renewable"))
+    return "Renewable energy comes from sources like solar, wind, and water which don’t run out.";
+
+  if(msg.includes("deforestation"))
+    return "Deforestation is cutting down forests, reducing carbon absorption and harming biodiversity.";
+
+  return null;
 }
 
-/* SEND MESSAGE */
-function sendMessage(){
+// ===== ADD MESSAGE =====
+function addMessage(text,type){
+  const div=document.createElement("div");
+  div.className="msg "+type;
+  div.textContent=text;
+  chatBox.appendChild(div);
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+// ===== SEND MESSAGE =====
+async function sendMessage(){
   const input=document.getElementById("userInput");
   const text=input.value.trim();
   if(!text) return;
@@ -232,15 +279,72 @@ function sendMessage(){
   updateHistory();
   input.value="";
 
-  addMessage("Thinking... ✨","bot");
+  addMessage("Thinking... 🤖","bot");
 
-  setTimeout(()=>{
+  const local = localClimateReply(text);
+  if(local){
     chatBox.lastChild.remove();
-    const reply = smartReply(text);
-    addMessage(reply,"bot");
-    history.push("AI: "+reply);
+    addMessage(local,"bot");
+    history.push("AI: "+local);
     updateHistory();
-  },600);
+    return;
+  }
+
+  try{
+    // fallback backend
+    const res = await fetch("https://sdg13-backend.onrender.com/chat",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({message:text})
+    });
+    const data = await res.json();
+    chatBox.lastChild.remove();
+    addMessage(data.reply || "🌍 Climate action helps protect our planet.", "bot");
+    history.push("AI: "+(data.reply || "Climate action helps protect our planet."));
+    updateHistory();
+  }catch{
+    chatBox.lastChild.remove();
+    addMessage("❌ Backend not responding","bot");
+    history.push("AI: Backend not responding");
+    updateHistory();
+  }
+}
+
+// ===== NEW CHAT =====
+function newChat(){
+  chatBox.innerHTML=`<div class="msg bot">Hello 🌱 I’m SoftClimate AI. Ask me anything about climate or sustainability!</div>`;
+  history=[];
+  updateHistory();
+}
+
+// ===== CARBON FOOTPRINT CALCULATOR =====
+function calculateImpact(){
+  const t=Number(transport.value)||0;
+  const e=Number(electricity.value)||0;
+  const m=Number(meat.value)||0;
+
+  const score=(t*0.4)+(e*0.05)+(m*1.5);
+  let level="",color="";
+
+  if(score<15){level="Low 🌱";color="#c8e6c9";}
+  else if(score<30){level="Moderate ⚡";color="#fff3cd";}
+  else{level="High 🔥";color="#fdecea";}
+
+  impactResult.style.background=color;
+  impactResult.innerHTML=`🌍 Score: <b>${score.toFixed(1)}</b><br>Impact: <b>${level}</b>`;
+  history.push(`Impact → ${score.toFixed(1)} (${level})`);
+  updateHistory();
+}
+
+// ===== UPDATE HISTORY =====
+function updateHistory(){
+  historyList.innerHTML="";
+  history.slice(-8).forEach(h=>{
+    const div=document.createElement("div");
+    div.className="history-item";
+    div.textContent=h;
+    historyList.appendChild(div);
+  });
 }
 </script>
 
