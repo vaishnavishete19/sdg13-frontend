@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>SDG 13 – Climate AI Dashboard</title>
+<title>SoftClimate AI</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -16,214 +16,164 @@
 }
 
 body{
+  min-height:100vh;
+  background:linear-gradient(180deg,#f7e8ff,#ffe4f3);
   display:flex;
-  height:100vh;
-  background:#f2f6f9;
+  align-items:center;
+  justify-content:center;
+  padding:40px;
+  color:#3a235c;
 }
 
-/* ===== SIDEBAR ===== */
-.sidebar{
-  width:240px;
-  background:#0f3d3e;
-  color:#ffffff;
-  padding:25px 15px;
+/* ===== CONTAINER ===== */
+.wrapper{
+  width:100%;
+  max-width:850px;
+  background:#ffffffcc;
+  backdrop-filter:blur(14px);
+  border-radius:30px;
+  padding:30px;
+  box-shadow:0 30px 60px rgba(150,80,200,0.18);
 }
 
-.sidebar h2{
-  margin-bottom:35px;
-  font-size:20px;
+/* ===== HEADER ===== */
+.title{
   text-align:center;
+  margin-bottom:20px;
 }
 
-.menu-btn{
-  padding:14px;
-  margin-bottom:12px;
-  border-radius:12px;
-  cursor:pointer;
-  transition:0.2s;
+.title h1{
+  font-size:34px;
+  font-weight:600;
 }
 
-.menu-btn:hover,
-.menu-btn.active{
-  background:#1f6f78;
+.title p{
+  margin-top:8px;
+  font-size:16px;
+  opacity:0.85;
 }
-
-/* ===== MAIN ===== */
-.main{
-  flex:1;
-  padding:25px;
-  overflow:hidden;
-}
-
-/* ===== SECTIONS ===== */
-.section{display:none;}
-.section.active{display:block;}
 
 /* ===== CHAT ===== */
-.chat-box{
-  height:70vh;
-  background:#ffffff;
-  border-radius:16px;
-  padding:18px;
+.chat-area{
+  background:#fdf7ff;
+  border-radius:24px;
+  padding:20px;
+  height:360px;
   overflow-y:auto;
-  box-shadow:0 10px 25px rgba(0,0,0,0.08);
+  box-shadow:inset 0 0 10px rgba(180,120,220,0.15);
 }
 
 .msg{
-  max-width:75%;
+  max-width:78%;
   padding:14px 18px;
   border-radius:18px;
   margin-bottom:12px;
+  font-size:15px;
   line-height:1.5;
-  font-size:16px;
 }
 
 .bot{
-  background:#e3f4f6;
-  border-left:4px solid #1f6f78;
+  background:#efe2ff;
 }
 
 .user{
-  background:#cdecee;
+  background:#ffd6eb;
   margin-left:auto;
   text-align:right;
 }
 
 /* ===== INPUT ===== */
-.chat-input{
+.input-area{
   display:flex;
   gap:12px;
-  margin-top:15px;
+  margin-top:16px;
 }
 
-.chat-input input{
+.input-area input{
   flex:1;
-  padding:16px 20px;
-  border-radius:35px;
-  border:1px solid #cfd8dc;
-  font-size:18px;
-}
-
-.chat-input button{
-  width:48px;
-  height:48px;
-  border-radius:50%;
-  border:none;
-  background:#1f6f78;
-  color:#ffffff;
-  font-size:18px;
-  cursor:pointer;
-}
-
-/* ===== IMPACT ===== */
-.card{
-  max-width:480px;
-  background:#ffffff;
-  padding:25px;
-  border-radius:16px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.08);
-}
-
-.card input{
-  width:100%;
-  padding:14px;
-  margin:10px 0 18px;
-  border-radius:10px;
-  border:1px solid #cfd8dc;
+  padding:16px 18px;
+  border-radius:30px;
+  border:1px solid #e0c9f2;
   font-size:15px;
 }
 
-.card button{
-  width:100%;
-  padding:14px;
+.input-area button{
+  width:52px;
+  height:52px;
+  border-radius:50%;
   border:none;
-  border-radius:10px;
-  background:#1f6f78;
-  color:#ffffff;
-  font-size:16px;
+  background:linear-gradient(135deg,#d16ba5,#b76be4);
+  color:#fff;
+  font-size:18px;
   cursor:pointer;
 }
 
-.result{
-  margin-top:15px;
-  padding:12px;
-  border-radius:10px;
-  font-weight:600;
+/* ===== HISTORY ===== */
+.history{
+  margin-top:20px;
 }
 
-/* ===== HISTORY ===== */
+.history h3{
+  font-size:16px;
+  margin-bottom:8px;
+}
+
 .history-item{
-  background:#ffffff;
-  padding:12px;
-  border-radius:10px;
-  margin-bottom:10px;
-  box-shadow:0 6px 16px rgba(0,0,0,0.08);
+  background:#efe2ff;
+  padding:10px 14px;
+  border-radius:14px;
+  margin-bottom:6px;
+  font-size:13px;
+}
+
+/* ===== FOOTER ===== */
+.footer{
+  text-align:center;
+  margin-top:18px;
+  font-size:13px;
+  opacity:0.75;
 }
 </style>
 </head>
 
 <body>
 
-<!-- SIDEBAR -->
-<div class="sidebar">
-  <h2>🌍 SDG 13 AI</h2>
+<div class="wrapper">
 
-  <div class="menu-btn active" onclick="showSection('chat',this)">💬 Chat</div>
-  <div class="menu-btn" onclick="showSection('impact',this)">🌱 Check Impact</div>
-  <div class="menu-btn" onclick="showSection('history',this)">📜 History</div>
-</div>
+  <div class="title">
+    <h1>SoftClimate AI</h1>
+    <p>An AI-Powered Climate Action Assistant for Carbon Awareness & Sustainability</p>
+  </div>
 
-<!-- MAIN -->
-<div class="main">
-
-  <!-- CHAT -->
-  <div id="chat" class="section active">
-    <div class="chat-box" id="chatBox">
-      <div class="msg bot">Hello 🌱 I’m your Climate AI assistant.</div>
-    </div>
-
-    <div class="chat-input">
-      <input id="userInput" placeholder="Ask about climate action, sustainability, carbon footprint..." />
-      <button onclick="sendMessage()">➤</button>
+  <div class="chat-area" id="chatBox">
+    <div class="msg bot">
+      Hello 🌍 I’m SoftClimate AI. Ask me anything about climate change, carbon, sustainability, or SDG 13.
     </div>
   </div>
 
-  <!-- IMPACT -->
-  <div id="impact" class="section">
-    <div class="card">
-      <h3>🌱 Carbon Footprint Checker</h3><br>
-
-      <input id="transport" type="number" placeholder="Transport km/day">
-      <input id="electricity" type="number" placeholder="Electricity units/month">
-      <input id="meat" type="number" placeholder="Meat meals/week">
-
-      <button onclick="calculateImpact()">Check Impact</button>
-      <div class="result" id="impactResult"></div>
-    </div>
+  <div class="input-area">
+    <input id="userInput" placeholder="Ask a climate question..." />
+    <button onclick="sendMessage()">➤</button>
   </div>
 
-  <!-- HISTORY -->
-  <div id="history" class="section">
-    <h3>📜 Activity History</h3><br>
+  <!-- CHAT HISTORY -->
+  <div class="history">
+    <h3>📜 Chat History</h3>
     <div id="historyList"></div>
+  </div>
+
+  <div class="footer">
+    AICTE Internship · CSRBOX Capstone · Powered by Gemini API
   </div>
 
 </div>
 
 <script>
-/* ===== NAVIGATION ===== */
-function showSection(id, btn){
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.menu-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  btn.classList.add('active');
-}
+const chatBox = document.getElementById("chatBox");
+const historyList = document.getElementById("historyList");
+let history = [];
 
-/* ===== CHAT ===== */
-const chatBox=document.getElementById("chatBox");
-const historyList=document.getElementById("historyList");
-let history=[];
-
+/* ADD MESSAGE */
 function addMessage(text,type){
   const div=document.createElement("div");
   div.className="msg "+type;
@@ -232,69 +182,67 @@ function addMessage(text,type){
   chatBox.scrollTop=chatBox.scrollHeight;
 }
 
-async function sendMessage(){
-  const input=document.getElementById("userInput");
-  const text=input.value.trim();
-  if(!text) return;
-
-  addMessage(text,"user");
-  history.push("You: "+text);
-  input.value="";
-
-  addMessage("Thinking... 🤖","bot");
-
-  try{
-    const res=await fetch("https://sdg13-backend-f5n4.onrender.com/chat",{
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({message:text})
-    });
-
-    const data=await res.json();
-    chatBox.lastChild.remove();
-    addMessage(data.reply,"bot");
-    history.push("AI: "+data.reply);
-    updateHistory();
-
-  }catch{
-    chatBox.lastChild.remove();
-    addMessage("❌ Backend not responding","bot");
-  }
-}
-
-/* ===== IMPACT ===== */
-function calculateImpact(){
-  const t=Number(transport.value)||0;
-  const e=Number(electricity.value)||0;
-  const m=Number(meat.value)||0;
-
-  const score=(t*0.4)+(e*0.05)+(m*1.5);
-  let level="",color="";
-
-  if(score<15){level="Low 🌱";color="#d4f1f4";}
-  else if(score<30){level="Moderate ⚡";color="#fff3cd";}
-  else{level="High 🔥";color="#fdecea";}
-
-  impactResult.style.background=color;
-  impactResult.innerHTML=`🌍 Score: <b>${score.toFixed(1)}</b><br>Impact: <b>${level}</b>`;
-
-  history.push(`Impact Check → ${score.toFixed(1)} (${level})`);
-  updateHistory();
-}
-
-/* ===== HISTORY ===== */
+/* UPDATE HISTORY */
 function updateHistory(){
   historyList.innerHTML="";
-  history.forEach(h=>{
+  history.slice(-6).forEach(h=>{
     const div=document.createElement("div");
     div.className="history-item";
     div.textContent=h;
     historyList.appendChild(div);
   });
 }
+
+/* SMART CLIMATE AI */
+function smartReply(msg){
+  msg = msg.toLowerCase();
+
+  if(["hi","hii","hello","hey"].includes(msg))
+    return "Hello 🌱 I’m SoftClimate AI. How can I help you with climate awareness today?";
+
+  if(msg.includes("what is carbon"))
+    return "Carbon is a natural element found in all living things. In climate science, it usually refers to carbon dioxide (CO₂), a greenhouse gas released from vehicles, industries, and electricity generation.";
+
+  if(msg.includes("carbon footprint"))
+    return "A carbon footprint is the total greenhouse gas emissions caused by human activities like travel, electricity usage, and food consumption.";
+
+  if(msg.includes("climate change"))
+    return "Climate change refers to long-term changes in Earth’s temperature and weather patterns caused mainly by human activities.";
+
+  if(msg.includes("global warming"))
+    return "Global warming is the gradual increase in Earth’s average temperature due to excess greenhouse gases trapping heat.";
+
+  if(msg.includes("sustainability"))
+    return "Sustainability means meeting today’s needs without harming future generations by protecting the environment and using resources wisely.";
+
+  if(msg.includes("sdg"))
+    return "SDG 13 focuses on urgent action to combat climate change and its impacts through awareness, innovation, and sustainable practices.";
+
+  return "That’s an important climate question 🌍. Climate action helps reduce environmental risks and build a sustainable future.";
+}
+
+/* SEND MESSAGE */
+function sendMessage(){
+  const input=document.getElementById("userInput");
+  const text=input.value.trim();
+  if(!text) return;
+
+  addMessage(text,"user");
+  history.push("You: "+text);
+  updateHistory();
+  input.value="";
+
+  addMessage("Thinking... ✨","bot");
+
+  setTimeout(()=>{
+    chatBox.lastChild.remove();
+    const reply = smartReply(text);
+    addMessage(reply,"bot");
+    history.push("AI: "+reply);
+    updateHistory();
+  },600);
+}
 </script>
 
 </body>
 </html>
-
-
